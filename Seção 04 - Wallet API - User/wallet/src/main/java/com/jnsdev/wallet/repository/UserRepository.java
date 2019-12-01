@@ -10,6 +10,6 @@ import com.jnsdev.wallet.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	
+	Optional<User> findByEmailEquals(String email);
 
 }
