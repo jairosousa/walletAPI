@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jnsdev.wallet.dto.UserDTO;
 import com.jnsdev.wallet.entity.User;
 import com.jnsdev.wallet.response.Response;
 import com.jnsdev.wallet.service.UserService;
@@ -25,7 +26,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<Response<UserDTO>> create(@Valid @RequestBody UserDTO dto, BindingResult result) {
 		
-		Response<UserDTO> response = new Response<userDTO>();
+		Response<UserDTO> response = new Response<UserDTO>();
 		
 		User user = service.save(convertDTOToEntity(dto));
 		

@@ -15,7 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jnsdev.wallet.dto.UserDTO;
 import com.jnsdev.wallet.entity.User;
 import com.jnsdev.wallet.service.UserService;
 
@@ -60,7 +62,7 @@ public class UserControllerTest {
 		return u;
 	}
 	
-	public String getJsonPayload() {
+	public String getJsonPayload() throws JsonProcessingException {
 		UserDTO dto = new UserDTO();
 		dto.setEmail(EMAIL);
 		dto.setName(NAME);
