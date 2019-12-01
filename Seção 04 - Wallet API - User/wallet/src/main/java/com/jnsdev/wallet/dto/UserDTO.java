@@ -15,11 +15,11 @@ public class UserDTO {
 	@NotNull
 	
 	@Length(min = 6, message = "A senha deve ter no minimo 6 caracteres")
-	private String passowrd;
+	private String password;
 
 	@Length(min = 3, max = 50, message = "O nome deve conter entre 3 e 50 caracteres")
 	private String name;
 
-	@Email(message = "Email invalido")
+	@Email(message = "Email inválido")
 	private String email;
 }

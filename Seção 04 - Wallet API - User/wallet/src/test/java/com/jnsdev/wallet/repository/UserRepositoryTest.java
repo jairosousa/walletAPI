@@ -31,7 +31,7 @@ public class UserRepositoryTest {
 	public void setup() {
 		User u = new User();
 		u.setName("Set up user");
-		u.setPassowrd("senha123");
+		u.setPassword("senha123");
 		u.setEmail(EMAIL);
 
 		repository.save(u);
@@ -46,7 +46,7 @@ public class UserRepositoryTest {
 	public void testSave() {
 		User u = new User();
 		u.setName("Teste");
-		u.setPassowrd("123456");
+		u.setPassword("123456");
 		u.setEmail("teste@teste.com");
 
 		User response = repository.save(u);
