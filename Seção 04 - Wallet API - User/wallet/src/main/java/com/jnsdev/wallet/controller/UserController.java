@@ -1,5 +1,7 @@
 package com.jnsdev.wallet.controller;
 
+import static com.jnsdev.wallet.util.Bcrypt.getHash;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.jnsdev.wallet.dto.UserDTO;
 import com.jnsdev.wallet.entity.User;
 import com.jnsdev.wallet.response.Response;
 import com.jnsdev.wallet.service.UserService;
+import com.jnsdev.wallet.util.Bcrypt;
 
 @RestController
 @RequestMapping("user")
@@ -45,7 +48,7 @@ public class UserController {
 		u.setId(dto.getId());
 		u.setEmail(dto.getEmail());
 		u.setName(dto.getName());
-		u.setPassword(dto.getPassword());
+		u.setPassword(getHash(dto.getPassword()));
 		
 		return u;
 	}
@@ -55,7 +58,6 @@ public class UserController {
 		dto.setId(u.getId());
 		dto.setEmail(u.getEmail());
 		dto.setName(u.getName());
-		dto.setPassword(u.getPassword());
 		
 		return dto;
 	}
