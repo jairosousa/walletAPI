@@ -1,6 +1,6 @@
 HELP.md
 target/
-!.mvn/wrappeer/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 
@@ -10,6 +10,22 @@ target/
 .factorypath
 .project
 .settings
-.springBenas
+.springBeans
 .sts4-cache
 
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
