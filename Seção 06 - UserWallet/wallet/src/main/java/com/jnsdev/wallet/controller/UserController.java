@@ -17,7 +17,6 @@ import com.jnsdev.wallet.dto.UserDTO;
 import com.jnsdev.wallet.entity.User;
 import com.jnsdev.wallet.response.Response;
 import com.jnsdev.wallet.service.UserService;
-import com.jnsdev.wallet.util.Bcrypt;
 
 @RestController
 @RequestMapping("user")
