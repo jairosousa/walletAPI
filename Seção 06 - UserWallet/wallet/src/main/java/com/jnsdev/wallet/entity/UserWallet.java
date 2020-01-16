@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "users")
+@Table(name = "users_wallet")
 public class UserWallet implements Serializable{
 
 		private static final long serialVersionUID = 1629762687252510204L;

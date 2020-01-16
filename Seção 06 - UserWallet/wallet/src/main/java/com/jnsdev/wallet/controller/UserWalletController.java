@@ -19,7 +19,7 @@ import com.jnsdev.wallet.response.Response;
 import com.jnsdev.wallet.service.UserWalletService;
 
 @RestController
-@RequestMapping(name = "user-wallet")
+@RequestMapping("user-wallet")
 public class UserWalletController {
 	
 	
@@ -57,12 +57,12 @@ public class UserWalletController {
 		UserWallet uw = new UserWallet();
 		
 		User u = new User();
-		u.setId(dto.getId());
+		u.setId(dto.getUsers());
 		
 		Wallet w = new Wallet();
 		w.setId(dto.getWallet());
 		
-		uw.setId(dto.getId());
+//		uw.setId(dto.getId());
 		uw.setUsers(u);
 		uw.setWallet(w);
 		
