@@ -1,5 +1,7 @@
 package com.jnsdev.wallet.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jnsdev.wallet.dto.UserDTO;
 import com.jnsdev.wallet.dto.WalletDTO;
-import com.jnsdev.wallet.entity.User;
 import com.jnsdev.wallet.entity.Wallet;
 import com.jnsdev.wallet.response.Response;
 import com.jnsdev.wallet.service.WalletService;

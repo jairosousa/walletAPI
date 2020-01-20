@@ -22,7 +22,6 @@ import com.jnsdev.wallet.service.UserWalletService;
 @RequestMapping("user-wallet")
 public class UserWalletController {
 	
-	
 	@Autowired
 	private UserWalletService service;
 	
