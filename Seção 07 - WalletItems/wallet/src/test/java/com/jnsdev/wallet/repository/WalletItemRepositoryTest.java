@@ -1,6 +1,8 @@
 package com.jnsdev.wallet.repository;
 
 import com.jnsdev.wallet.entity.Wallet;
+import com.jnsdev.wallet.entity.WalletItem;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -31,10 +35,10 @@ public class WalletItemRepositoryTest {
         w.setName("Carteira 1");
         w.setValue(BigDecimal.valueOf(500));
 
-        WalletItem wi = WalletItem(w, DATE, TYPT, DESCRIPTION, VALUE);
+        WalletItem wi = new WalletItem(1L, w, DATE, TYPT, DESCRIPTION, VALUE);
 
         WalletItem response = repository.save(wi);
 
-        Assert.assertNotNull(response);
+        assertNotNull(response);
     }
 }
