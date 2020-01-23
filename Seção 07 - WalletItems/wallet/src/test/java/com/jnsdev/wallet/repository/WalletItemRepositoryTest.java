@@ -7,7 +7,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.ConstraintViolationException;
@@ -18,6 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -118,6 +123,48 @@ public class WalletItemRepositoryTest {
 		Optional<WalletItem> response = repository.findById(wi.getId());
 		
 		assertFalse(response.isPresent());
+		
+	}
+	
+	@Test
+	public void testFindBetweenDates() {
+		Optional<Wallet> w = walletRepository.findById(savedWalletId);
+		
+		LocalDateTime localDateTime = DATE.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		
+		Date currentDatePlusFiveDays = Date.from(localDateTime.plusDays(5).atZone(ZoneId.systemDefault()).toInstant());
+		Date currentDatePlusSevenDays = Date.from(localDateTime.plusDays(7).atZone(ZoneId.systemDefault()).toInstant());
+		
+		repository.save(new WalletItem(null, w.get(), currentDatePlusFiveDays, TYPE, DESCRIPTION, VALUE));
+		repository.save(new WalletItem(null, w.get(), currentDatePlusSevenDays, TYPE, DESCRIPTION, VALUE));
+		
+		PageRequest pg = new PageRequest(0, 10);
+		Page<WalletItem> response = repository.findAllByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(savedWalletId, DATE, currentDatePlusFiveDays, pg);
+		
+		assertEquals(response.getContent().size(), 2);
+		assertEquals(response.getTotalElements(), 2);
+		assertEquals(response.getContent().get(0).getWallet().getId(), savedWalletId);
+		
+	}
+	
+	@Test
+	public void testFindByType() {
+		List<WalletItem> response = repository.findByWalletIdAndType(savedWalletId, TYPE);
+		
+		assertEquals(response.size(), 1);
+		assertEquals(response.get(0).getType(), TYPE);
+	}
+	
+	@Test
+	public void testFindByTypeSd() {
+		Optional<Wallet> w = walletRepository.findById(savedWalletId);
+		
+		repository.save(new WalletItem(null, w.get(), DATE, TypeEnum.SD, DESCRIPTION, VALUE));
+		
+		List<WalletItem> response = repository.findByWalletIdAndType(savedWalletId, TypeEnum.SD);
+		
+		assertEquals(response.size(), 1);
+		assertEquals(response.get(0).getType(), TypeEnum.SD);
 		
 	}
 }
