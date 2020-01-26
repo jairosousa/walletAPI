@@ -149,7 +149,7 @@ public class WalletItemController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 		}
 		
-//		service.deleteById(walletItemId);
+		service.deleteById(walletItemId);
 		response.setData("WalletItem de id "+ walletItemId + " apagada com sucesso");
 		return ResponseEntity.ok().body(response);
 	}

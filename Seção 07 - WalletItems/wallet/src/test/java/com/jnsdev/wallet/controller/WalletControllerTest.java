@@ -1,9 +1,12 @@
 package com.jnsdev.wallet.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +26,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jnsdev.wallet.dto.WalletDTO;
 import com.jnsdev.wallet.entity.Wallet;
+import com.jnsdev.wallet.response.Response;
 import com.jnsdev.wallet.service.WalletService;
 
 @RunWith(SpringRunner.class)
@@ -59,16 +63,27 @@ public class WalletControllerTest {
 	}
 	
 	@Test
-	public void testSaveInvalidWallet() throws JsonProcessingException, Exception {
+	public void testSaveNameInvalidWallet() throws JsonProcessingException, Exception {
 		BDDMockito.given(service.save(Mockito.any(Wallet.class))).willReturn(getMockWallet());
 
-		mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, "12", null))
+		mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, "12", VALUE))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errors[0]").value("O nome deve conter no mínimo 3 caracteres"))
-				.andExpect(jsonPath("$.errors[1]").value("Insira um valor para carteira"));
+				.andExpect(jsonPath("$.errors.[0]").value("O nome deve conter no mínimo 3 caracteres"));
 
+	}
+	
+	@Test
+	public void testSaveInvalidWalletValueNull() throws JsonProcessingException, Exception {
+		BDDMockito.given(service.save(Mockito.any(Wallet.class))).willReturn(getMockWallet());
+		
+		mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, NAME, null))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+		.andExpect(status().isBadRequest())
+		.andExpect(jsonPath("$.errors.[0]").value("Insira um valor para carteira"));
+		
 	}
 
 	private Wallet getMockWallet() {
@@ -78,6 +93,7 @@ public class WalletControllerTest {
 		w.setValue(VALUE);
 		return w;
 	}
+	
 	
 	private String getJsonPayload(Long id, String name, BigDecimal value) throws JsonProcessingException {
 		WalletDTO dto = new WalletDTO();
