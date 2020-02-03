@@ -26,7 +26,6 @@ public class JwtTokenUtil {
 	@Value("${jwt.expiration}")
 	private Long expiration;
 
-
 	public String getUsernameFromToken(String token) {
 		String username;
 		try {
