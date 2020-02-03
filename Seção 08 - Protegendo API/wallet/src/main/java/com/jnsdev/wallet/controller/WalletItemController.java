@@ -29,11 +29,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jnsdev.wallet.dto.WalletItemDTO;
+import com.jnsdev.wallet.entity.UserWallet;
 import com.jnsdev.wallet.entity.Wallet;
 import com.jnsdev.wallet.entity.WalletItem;
 import com.jnsdev.wallet.response.Response;
 import com.jnsdev.wallet.service.UserWalletService;
 import com.jnsdev.wallet.service.WalletItemService;
+import com.jnsdev.wallet.util.Util;
 import com.jnsdev.wallet.util.enums.TypeEnum;
 
 @RestController
@@ -43,8 +45,8 @@ public class WalletItemController {
 	@Autowired
 	private WalletItemService service;
 	
-//	@Autowired
-//	private UserWalletService userWalletService;
+	@Autowired
+	private UserWalletService userWalletService;
 	
 	private static final Logger log = LoggerFactory.getLogger(WalletItemController.class);
 
@@ -74,12 +76,12 @@ public class WalletItemController {
 		Response<Page<WalletItemDTO>> response = new Response<Page<WalletItemDTO>>();
 		
 		
-//		Optional<UserWallet> uw = userWalletService.findByUsersIdAndWalletId(Util.getAuthenticatedUserId(), wallet);
+		Optional<UserWallet> uw = userWalletService.findByUsersIdAndWalletId(Util.getAuthenticatedUserId(), wallet);
 		
-//		if (!uw.isPresent()) {
-//			response.getErrors().add("Você não tem acesso a essa carteira");
-//			return ResponseEntity.badRequest().body(response);
-//		}
+		if (!uw.isPresent()) {
+			response.getErrors().add("Você não tem acesso a essa carteira");
+			return ResponseEntity.badRequest().body(response);
+		}
 		
 		Page<WalletItem> items = service.findBetweenDates(wallet, startDate, endDate, page);
 		Page<WalletItemDTO> dto = items.map(i -> this.convertEntityToDto(i));
