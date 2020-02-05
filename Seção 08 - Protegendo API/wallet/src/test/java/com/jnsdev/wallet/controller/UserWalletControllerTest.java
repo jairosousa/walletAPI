@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,6 +44,7 @@ public class UserWalletControllerTest {
 	MockMvc mvc;
 
 	@Test
+	@WithMockUser
 	public void testSave() throws Exception {
 
 		BDDMockito.given(service.save(Mockito.any(UserWallet.class))).willReturn(getMockUserWallet());
@@ -55,14 +57,13 @@ public class UserWalletControllerTest {
 	}
 	
 	@Test
+	@WithMockUser
 	public void testSaveInvalidUserWallet() throws JsonProcessingException, Exception {
 		BDDMockito.given(service.save(Mockito.any(UserWallet.class))).willReturn(getMockUserWallet());
 
 		mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, null, null))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isBadRequest())
-				.andExpect(jsonPath("$.errors[0]").value("Informe o id da carteira"))
-				.andExpect(jsonPath("$.errors[1]").value("Informe o id do usuário"));
+				.andExpect(status().isBadRequest());
 
 	}
 
